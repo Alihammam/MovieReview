@@ -9,4 +9,7 @@ class Movie < ActiveRecord::Base
   validates_presence_of :length
   validates_presence_of :description
   validates_numericality_of :director_id, :only_Integer => true
+
+  has_attached_file :image, styles: { medium: "400x600#"}
+  validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
 end

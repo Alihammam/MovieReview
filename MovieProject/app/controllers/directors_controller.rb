@@ -69,6 +69,6 @@ class DirectorsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def director_params
-      params.require(:director).permit(:name, :bio)
+      params.require(:director).permit(:name, :bio,:image)
     end
 end
