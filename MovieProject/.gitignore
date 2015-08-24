@@ -11,3 +11,7 @@
 /log/*
 !/log/.keep
 /tmp
+/public/system/directors/images
+/public/system/actors/images
+/public/system/movies/images
+

@@ -4,6 +4,7 @@ class Movie < ActiveRecord::Base
   belongs_to :director
   has_many :comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  has_many :ratings,dependent: :destroy
 
   validates_presence_of :title
   validates_presence_of :length

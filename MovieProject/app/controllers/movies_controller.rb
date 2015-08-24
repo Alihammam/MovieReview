@@ -6,6 +6,7 @@ class MoviesController < ApplicationController
 
   # GET /movies
   # GET /movies.json
+  @rating
   def index
     @movies = Movie.all
   end
@@ -18,6 +19,7 @@ class MoviesController < ApplicationController
   # GET /movies/new
   def new
     @movie = current_user.movies.build
+    @rating = current_user.ratings.build
   end
 
   # GET /movies/1/edit
@@ -28,9 +30,9 @@ class MoviesController < ApplicationController
   # POST /movies.json
   def create
     @movie = current_user.movies.build(movie_params)
-
+    @rating = current_user.ratings.build(rating_params)
     respond_to do |format|
-      if @movie.save
+      if @movie.save 
         format.html { redirect_to @movie, notice: 'Movie was successfully created.' }
         format.json { render :show, status: :created, location: @movie }
       else
@@ -72,6 +74,11 @@ class MoviesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def movie_params
-      params.require(:movie).permit(:title, :description, :length, :director_id,:image)
+      params.require(:movie).permit(:title, :description, :length, :director_id,:image,:rating)
+    end
+
+    #for rating
+    def rating_params
+      params.require(:movie).permit(:rate , :user_id , :movie_id)
     end
 end

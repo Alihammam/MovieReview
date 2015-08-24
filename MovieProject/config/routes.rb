@@ -6,8 +6,7 @@ Rails.application.routes.draw do
   end
   resources :movies do
     resources :ratings
-    resources :comments
-    
+    resources :comments  
   end 
   resources :directors
   resources :actors
