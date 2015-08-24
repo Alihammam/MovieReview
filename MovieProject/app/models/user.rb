@@ -4,8 +4,12 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :comments
-  has_many :movies
-  has_many :favorites
-  has_many :ratings
+  has_many :comments, dependent: :destroy
+  has_many :movies, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  has_many :ratings, dependent: :destroy
+
+  validates_presence_of :name
+  validates_confirmation_of :email
+  validates_length_of :password, :in => 8..20
 end
