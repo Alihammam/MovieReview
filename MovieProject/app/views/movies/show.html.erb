@@ -21,13 +21,19 @@
   <%= @movie.director_id %>
 
 </p>
-
+	<strong>Rating</strong>
+	<%= @finalrate %>
+	<br/>
 <p>
-	<% if @comment.blank? %>
+	 	
+	 <div class="star-rating" data-score=<%=@finalrate%> >
+	 </div>
+	<% if @comments.blank? %>
 	 <h3>No Comments just yet would you like to add a  
 	 <%= link_to 'comment' ,new_movie_comment_path(@movie) %>
 	 </h3>
 	 <% else %>
+	 	<h2>Comments :</h2>
 		<% @comments.each do |comment| %>
 		<div class = "Comment">
 			<%= comment.body %>			
@@ -44,4 +50,13 @@
 <br/>
 <%= link_to 'Back', movies_path(@movie) %>
 
-<%= link_to 'Sign Out' , destroy_user_session_path %>
+
+<script>
+	$('.star-rating').raty({
+		path : '/assets/',
+		readOnly:true,
+		score: function(){
+			return $(this).attr('data-score');
+		}
+	});
+</script>

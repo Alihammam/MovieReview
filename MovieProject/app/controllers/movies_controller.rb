@@ -1,6 +1,6 @@
 class MoviesController < ApplicationController
   before_action :set_movie, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_rates , :rating_average , only: [:show]
   before_action :authenticate_user! ,except: [:index ,:show]
 
   # GET /movies
@@ -12,6 +12,7 @@ class MoviesController < ApplicationController
   # GET /movies/1
   # GET /movies/1.json
   def show
+    @comments = Comment.where(movie_id:  @movie.id)
   end
 
   # GET /movies/new
@@ -68,10 +69,19 @@ class MoviesController < ApplicationController
       @movie = Movie.find(params[:id])
     end
 
+    def set_rates
+      @rates = Rating.where(movie_id: @movie.id)
+    end
     # Never trust parameters from the scary internet, only allow the white list through.
     def movie_params
       params.require(:movie).permit(:title, :description, :length, :director_id,:image,:rating)
     end
-
-    
+    def rating_average 
+      i = 0 ;
+      if @rates.blank?
+        @finalrate = 0 
+      else
+        @finalrate = @rates.average(:rate).round(2) 
+      end
+    end
 end

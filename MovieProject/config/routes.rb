@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   end
   resources :movies do
     resources :ratings , except: [:show,:index]
-    resources :comments  , except: [:show , :index]
+    resources :comments  , except: [:show , :index  ]
   end 
   resources :directors
   resources :actors

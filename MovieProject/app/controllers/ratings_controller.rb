@@ -2,16 +2,6 @@ class RatingsController < ApplicationController
   before_action :set_rating, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
   before_action :set_movie
-  # GET /ratings
-  # GET /ratings.json
-  def index
-    @ratings = Rating.all
-  end
-
-  # GET /ratings/1
-  # GET /ratings/1.json
-  def show
-  end
 
   # GET /ratings/new
   def new
@@ -26,10 +16,11 @@ class RatingsController < ApplicationController
   # POST /ratings.json
   def create
     @rating = Rating.new(rating_params)
-    @rating.user_id = current_user.id
+    @rating.user_id = current_user.id 
+    @rating.movie_id = @movie.id 
     respond_to do |format|
       if @rating.save
-        format.html { redirect_to @rating, notice: 'Rating was successfully created.' }
+        format.html { redirect_to @movie , notice: 'Rating was successfully created.' }
         format.json { render :show, status: :created, location: @rating }
       else
         format.html { render :new }
@@ -43,7 +34,7 @@ class RatingsController < ApplicationController
   def update
     respond_to do |format|
       if @rating.update(rating_params)
-        format.html { redirect_to @rating, notice: 'Rating was successfully updated.' }
+        format.html { redirect_to @movie, notice: 'Rating was successfully updated.' }
         format.json { render :show, status: :ok, location: @rating }
       else
         format.html { render :edit }
@@ -57,7 +48,7 @@ class RatingsController < ApplicationController
   def destroy
     @rating.destroy
     respond_to do |format|
-      format.html { redirect_to ratings_url, notice: 'Rating was successfully destroyed.' }
+      format.html { redirect_to @movie, notice: 'Rating was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -72,6 +63,7 @@ class RatingsController < ApplicationController
     def rating_params
       params.require(:rating).permit(:rate,:movie_id)
     end
+
     def set_movie
       @movie = Movie.find(params[:movie_id])
     end
