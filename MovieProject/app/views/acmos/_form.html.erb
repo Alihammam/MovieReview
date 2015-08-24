@@ -1,0 +1,25 @@
+<%= form_for(@acmo) do |f| %>
+  <% if @acmo.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@acmo.errors.count, "error") %> prohibited this acmo from being saved:</h2>
+
+      <ul>
+      <% @acmo.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :actor_id %><br>
+    <%= f.number_field :actor_id %>
+  </div>
+  <div class="field">
+    <%= f.label :movie_id %><br>
+    <%= f.number_field :movie_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

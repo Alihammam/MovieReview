@@ -1,0 +1,2 @@
+module AcmosHelper
+end

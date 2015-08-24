@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Acmos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Actor</th>
+      <th>Movie</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @acmos.each do |acmo| %>
+      <tr>
+        <td><%= acmo.actor_id %></td>
+        <td><%= acmo.movie_id %></td>
+        <td><%= link_to 'Show', acmo %></td>
+        <td><%= link_to 'Edit', edit_acmo_path(acmo) %></td>
+        <td><%= link_to 'Destroy', acmo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Acmo', new_acmo_path %>
