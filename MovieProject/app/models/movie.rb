@@ -1,7 +1,7 @@
 class Movie < ActiveRecord::Base
-  has_many :acmos, dependent: :destroy
   belongs_to :user
   belongs_to :director
+  has_many :acmos, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :ratings,dependent: :destroy

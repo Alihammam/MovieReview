@@ -8,8 +8,4 @@ class User < ActiveRecord::Base
   has_many :movies, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :ratings, dependent: :destroy
-
-  
-
-
 end

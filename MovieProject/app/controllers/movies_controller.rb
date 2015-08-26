@@ -2,6 +2,7 @@ class MoviesController < ApplicationController
   before_action :set_movie, only: [:show, :edit, :update, :destroy]
   before_action :set_rates , :rating_average , only: [:show]
   before_action :authenticate_user! ,except: [:index ,:show]
+  before_action :set_actors , only: [:show]
 
   # GET /movies
   # GET /movies.json
@@ -13,6 +14,7 @@ class MoviesController < ApplicationController
   # GET /movies/1.json
   def show
     @comments = Comment.where(movie_id:  @movie.id)
+    #@rating = Rating.new
   end
 
   # GET /movies/new
@@ -76,6 +78,7 @@ class MoviesController < ApplicationController
     def movie_params
       params.require(:movie).permit(:title, :description, :length, :director_id,:image,:rating)
     end
+    
     def rating_average 
       i = 0 ;
       if @rates.blank?
@@ -84,4 +87,19 @@ class MoviesController < ApplicationController
         @finalrate = @rates.average(:rate).round(2) 
       end
     end
+
+    def set_actors 
+      @actorsID = Acmo.where(movie_id: @movie.id)
+      i = 0 ;
+      @x = Array.new(@actorsID.length)
+       # @actorsID.each do |f|
+          puts '---------------------------------'
+          puts @actorsID[0].actor_id
+        if !@actorsID.blank?
+          @actorsID.each do |f| 
+           @x[i] = Actor.find(@actorsID[i].actor_id)
+            i = i+1
+          end
+        end
+    end 
 end

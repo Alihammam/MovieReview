@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
-  resources :acmos
   devise_for :users do
    resources :favorites
 
   end
   resources :movies do
-    resources :ratings , except: [:show,:index]
-    resources :comments  , except: [:show , :index  ]
+    resources :ratings 
+    resources :comments  
+    resources :acmos 
   end 
   resources :directors
   resources :actors

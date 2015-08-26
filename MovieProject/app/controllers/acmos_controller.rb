@@ -1,5 +1,7 @@
 class AcmosController < ApplicationController
   before_action :set_acmo, only: [:show, :edit, :update, :destroy]
+  before_action :set_movie 
+  before_action :authenticate_user!
 
   # GET /acmos
   # GET /acmos.json
@@ -25,10 +27,10 @@ class AcmosController < ApplicationController
   # POST /acmos.json
   def create
     @acmo = Acmo.new(acmo_params)
-
-    respond_to do |format|
+    @acmo.movie_id = @movie.id 
+      respond_to do |format|
       if @acmo.save
-        format.html { redirect_to @acmo, notice: 'Acmo was successfully created.' }
+        format.html { redirect_to movies_path(@movie), notice: 'Acmo was successfully created.' }
         format.json { render :show, status: :created, location: @acmo }
       else
         format.html { render :new }
@@ -70,5 +72,9 @@ class AcmosController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def acmo_params
       params.require(:acmo).permit(:actor_id, :movie_id)
+    end
+
+    def set_movie 
+      @movie = Movie.find(params[:movie_id])
     end
 end
