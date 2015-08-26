@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150824165515) do
+ActiveRecord::Schema.define(version: 20150826142602) do
 
   create_table "acmos", force: :cascade do |t|
     t.integer  "actor_id",   limit: 4
