@@ -1,8 +1,9 @@
 class MoviesController < ApplicationController
-  before_action :set_movie, only: [:show, :edit, :update, :destroy]
+  before_action :set_movie, only: [:show, :edit, :update, :destroy ,:addToFavorite,:removeFromFavorite]
   before_action :set_rates , :rating_average , only: [:show]
-  before_action :authenticate_user! ,except: [:index ,:show]
+  before_action :authenticate_user! ,except: [:index ]
   before_action :set_actors , only: [:show]
+  before_action :set_favorite ,only: [:show,:removeFromFavorite]
 
   # GET /movies
   # GET /movies.json
@@ -13,8 +14,8 @@ class MoviesController < ApplicationController
   # GET /movies/1
   # GET /movies/1.json
   def show
+    #find all comments
     @comments = Comment.where(movie_id:  @movie.id)
-    #@rating = Rating.new
   end
 
   # GET /movies/new
@@ -65,6 +66,29 @@ class MoviesController < ApplicationController
     end
   end
 
+  def addToFavorite
+    @f = Favorite.new
+    @f.user_id = current_user.id
+    @f.movie_id = @movie.id
+    respond_to do |format|
+    if @f.save 
+        format.html { redirect_to @movie, notice: 'Added to favorites' }
+        format.json { render :show, status: :created, location: @movie }
+      else
+        format.html { render :new }
+        format.json { render json: @movie.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def removeFromFavorite
+      @f.destroy
+      respond_to do |format|
+        format.html { redirect_to @movie, notice: 'Favorite was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_movie
@@ -92,14 +116,15 @@ class MoviesController < ApplicationController
       @actorsID = Acmo.where(movie_id: @movie.id)
       i = 0 ;
       @x = Array.new(@actorsID.length)
-       # @actorsID.each do |f|
-          puts '---------------------------------'
-          puts @actorsID[0].actor_id
         if !@actorsID.blank?
           @actorsID.each do |f| 
            @x[i] = Actor.find(@actorsID[i].actor_id)
             i = i+1
           end
         end
+    end
+
+    def set_favorite
+      @f = Favorite.where(movie_id: @movie.id,user_id: current_user.id)
     end 
 end

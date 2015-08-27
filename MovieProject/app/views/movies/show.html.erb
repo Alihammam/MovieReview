@@ -1,3 +1,5 @@
+<p id="notice"><%= notice %></p>
+
 <div>	
 <%= image_tag @movie.image.url(:medium) %>
 </div>
@@ -51,10 +53,16 @@
 	 <% end %>
 	<% end %>
 
+<%= @f %>
 
 
-
-</p>
+ </p>
+ <% if @f.blank? %>
+<%= link_to 'Add to favorites' , add_to_favorite_path %>
+<% else %>
+<%= link_to 'Remove from favorites' ,remove_from_favorite_path(@f) ,method: :delete , data: { confirm: 'Are you sure?'  }%>
+<% end %> 
+<br/>
 <%= link_to 'Make a Comment' , new_movie_comment_path(@movie) %>
 <br/>
 <%= link_to 'Rate this movie' , new_movie_rating_path(@movie) %>

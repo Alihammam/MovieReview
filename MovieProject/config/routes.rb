@@ -1,14 +1,12 @@
 Rails.application.routes.draw do
   devise_for :users do
-  
-
   end
   resources :movies do
     resources :ratings 
     resources :comments  
-    resources :acmos 
-    resources :favorites
+    resources :acmos
   end 
+  resources :favorites
   resources :directors
   resources :actors
   # The priority is based upon order of creation: first created -> highest priority.
@@ -22,7 +20,8 @@ Rails.application.routes.draw do
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
-
+     get 'movies/:id/addToFavorite' => 'movies#addToFavorite', as: :add_to_favorite
+     delete 'movies/:id/removeFromFavorite' => 'movies#removeFromFavorite' , as: :remove_from_favorite
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 
