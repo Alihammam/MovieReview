@@ -1,15 +1,18 @@
 class FavoritesController < ApplicationController
   before_action :set_favorite, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_movie
+  before_action :authenticate_user!
   # GET /favorites
   # GET /favorites.json
   def index
     @favorites = Favorite.all
+
   end
 
   # GET /favorites/1
   # GET /favorites/1.json
   def show
+    @favorites = Favoirte.where(user_id: current_user.id)
   end
 
   # GET /favorites/new
@@ -26,7 +29,7 @@ class FavoritesController < ApplicationController
   def create
     @favorite = Favorite.current_user.favorites.build(favorite_params)
     @favorite.user_id = current_user.id 
-
+    @favorite.user_id = @movie.id
     respond_to do |format|
       if @favorite.save
         format.html { redirect_to @favorite, notice: 'Favorite was successfully created.' }
@@ -68,6 +71,9 @@ class FavoritesController < ApplicationController
       @favorite = Favorite.find(params[:id])
     end
 
+    def set_movie
+      @movie = Movie.find(params[:movie_id])
+    end
     # Never trust parameters from the scary internet, only allow the white list through.
     def favorite_params
       params.require(:favorite).permit(:user_id, :movie_id)

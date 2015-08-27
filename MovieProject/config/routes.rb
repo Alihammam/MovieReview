@@ -1,12 +1,13 @@
 Rails.application.routes.draw do
   devise_for :users do
-   resources :favorites
+  
 
   end
   resources :movies do
     resources :ratings 
     resources :comments  
     resources :acmos 
+    resources :favorites
   end 
   resources :directors
   resources :actors
