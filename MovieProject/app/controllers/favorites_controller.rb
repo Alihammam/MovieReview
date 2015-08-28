@@ -1,11 +1,21 @@
 class FavoritesController < ApplicationController
   before_action :authenticate_user!
+
   # GET /favorites
   # GET /favorites.json
   #to show the favorites of someone
   def index
-    @favorites = Favorite.all
-
+    @favorites = Favorite.where(user_id: current_user.id)
+    if @favorites.blank?
+      @x = nil ;
+    else 
+    @x = Array.new(@favorites.length)
+    i = 0 ;
+      @favorites.each do |f|
+        @x[i] = Movie.find(f.movie_id)
+        i = i + 1 ;
+      end
+    end
   end
 
     def destroy
@@ -25,4 +35,5 @@ class FavoritesController < ApplicationController
     def favorite_params
       params.require(:favorite).permit(:user_id, :movie_id)
     end
+
 end

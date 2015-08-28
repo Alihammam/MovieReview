@@ -1,0 +1,15 @@
+<% if !@x.blank? %>
+<h1>Your Favorites are</h1>
+	<% @x.each do |f| %>
+	<div>	
+		<%= image_tag f.image.url(:medium) %>
+	</div>
+	<p>
+	  <strong>Title:</strong>
+	  <%= f.title %>
+	</p>
+	<% end %>
+
+<% else %>
+	<h1>You have no Favorites yet</h1>
+<% end %> 
