@@ -8,7 +8,13 @@ class FavoritesController < ApplicationController
 
   end
 
-  
+    def destroy
+      @f.destroy
+      respond_to do |format|
+        format.html { redirect_to @movie, notice: 'Favorite was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

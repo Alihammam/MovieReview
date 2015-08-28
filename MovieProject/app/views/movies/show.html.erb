@@ -53,14 +53,11 @@
 	 <% end %>
 	<% end %>
 
-<%= @f %>
-
-
  </p>
  <% if @f.blank? %>
 <%= link_to 'Add to favorites' , add_to_favorite_path %>
 <% else %>
-<%= link_to 'Remove from favorites' ,remove_from_favorite_path(@f) ,method: :delete , data: { confirm: 'Are you sure?'  }%>
+<%= link_to 'Remove from favorites'  ,method: :delete ,data: { confirm: 'Are you sure?'  }%>
 <% end %> 
 <br/>
 <%= link_to 'Make a Comment' , new_movie_comment_path(@movie) %>

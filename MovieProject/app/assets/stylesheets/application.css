@@ -1,0 +1,30 @@
+.wrapper{
+    border:1px solid #CCC;
+    width:900px;
+    margin:0px auto;
+}
+
+body{
+	margin : 0px;
+}
+
+.myHeader{
+	width:100%;
+    position:fixed;
+    /*height:5%;*/
+    top:0px;
+    background:#7383af;	
+}
+
+.content{
+	margin :0px auto;
+	text-align: center;
+	/*overflow: auto;*/
+}
+
+#mylist{
+	display : inline ;
+	text-decoration: none;
+	list-style-type: none;
+	color:red;
+}

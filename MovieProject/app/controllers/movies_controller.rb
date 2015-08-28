@@ -1,9 +1,9 @@
 class MoviesController < ApplicationController
-  before_action :set_movie, only: [:show, :edit, :update, :destroy ,:addToFavorite,:removeFromFavorite]
+  before_action :set_movie, only: [:show, :edit, :update, :destroy ,:addToFavorite]
   before_action :set_rates , :rating_average , only: [:show]
   before_action :authenticate_user! ,except: [:index ]
   before_action :set_actors , only: [:show]
-  before_action :set_favorite ,only: [:show,:removeFromFavorite]
+  before_action :set_favorite ,only: [:show]
 
   # GET /movies
   # GET /movies.json
@@ -81,12 +81,17 @@ class MoviesController < ApplicationController
     end
   end
 
-  def removeFromFavorite
-      @f.destroy
+  def removeFromFavorite (f)
+      f.destroy
       respond_to do |format|
         format.html { redirect_to @movie, notice: 'Favorite was successfully destroyed.' }
         format.json { head :no_content }
       end
+  end
+
+  def destroyFavorite
+    set_favorite
+    removeFromFavorite
   end
 
   private
@@ -125,6 +130,6 @@ class MoviesController < ApplicationController
     end
 
     def set_favorite
-      @f = Favorite.where(movie_id: @movie.id,user_id: current_user.id)
+      @f = Favorite.where(:movie_id=>@movie.id,:user_id=>current_user.id)
     end 
 end
